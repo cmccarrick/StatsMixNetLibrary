@@ -20,6 +20,9 @@ Example usage for async use.  Use this for situation when you cannot wait for th
             meta.Add("Domain", _SenderDomain);
             Task.Factory.StartNew(() => smClient.trackasync("METRIC_NAME", 1, meta));
 
+If you are not using .Net 4 you cannot use the Task.Factory you will have to use something like:
+
+ThreadPool.QueueUserWorkItem(callback => smClient.track("Automotive Emails Sent", 1, meta));
 
 Example usage for sync use.  Use this for situation when it is ok to block waiting for the metric update and for initial testing.
 
