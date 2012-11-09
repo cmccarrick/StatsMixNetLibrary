@@ -54,6 +54,25 @@ namespace StatsMixNetLibrary
 
         }
 
+        public void trackasync(string metricName, double value = 1.0)
+        {
+            var properties = new Dictionary<string, string>();
+            properties["name"] = metricName;
+            properties["value"] = value.ToString();
+            requestAsync("track", properties, Method.POST);
+        }
+
+        public void trackasync(string metricName, double value, Dictionary<string, string> properties, Dictionary<string, string> meta)
+        {
+            string json = JsonConvert.SerializeObject(meta);
+            properties["value"] = value.ToString();
+            properties["meta"] = json;
+            properties["name"] = metricName;
+            requestAsync("track", properties, Method.POST);
+           
+        }
+
+
 
         public string track(string metricName, Dictionary<string, string> properties, Dictionary<string, string> meta)
         {
